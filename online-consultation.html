@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Consultation</title>
+    <style>
+        /* General styles */
+        body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: #fff;
+        position: relative;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('assets/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        opacity: 0.5; /* Set opacity here */
+        z-index: -1; /* Place behind all other content */
+    }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        nav {
+            text-align: center;
+            margin: 0;
+       
+            padding: 10px 0;
+            margin: 20px 0;
+            border-radius: 5px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #fff; /* White Text */
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #627283;
+            margin: 0 5px;
+            
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        section {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+        }
+
+        section h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        form input,
+        form textarea,
+        form select,
+        form button {
+            display: block;
+            width: calc(100% - 20px);
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        form input::placeholder,
+        form textarea::placeholder {
+            color: #ccc;
+        }
+
+        form button {
+            background: #007BFF;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Online Consultation</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="doctor-profiles.html">Doctor Profiles</a>
+        <a href="patient-registration.html">Patient Registration</a>
+        <a href="doctor-admin-panel.html">Doctor & Admin Panel</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <section>
+        <h2>Schedule Your Online Consultation</h2>
+        <form>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="text" placeholder="Phone Number" required>
+            <select required>
+                <option value="" disabled selected>Select Doctor</option>
+                <option value="Dr. John Doe (Cardiologist)">Dr. John Doe (Cardiologist)</option>
+                <option value="Dr. Jane Smith (Dermatologist)">Dr. Jane Smith (Dermatologist)</option>
+                <option value="Dr. Emily White (Pediatrician)">Dr. Emily White (Pediatrician)</option>
+            </select>
+            <input type="date" required>
+            <textarea placeholder="Briefly describe your concern or symptoms" rows="4"></textarea>
+            <button type="submit">Book Consultation</button>
+        </form>
+    </section>
+</body>
+</html>

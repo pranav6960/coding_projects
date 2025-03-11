@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Profiles</title>
+    <style>
+        /* General styles */
+        body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: #fff;
+        position: relative;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('assets/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        opacity: 0.5; /* Set opacity here */
+        z-index: -1; /* Place behind all other content */
+    }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        nav {
+            text-align: center;
+            margin: 0;
+          
+            padding: 10px 0;
+            margin: 20px 0;
+            border-radius: 5px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #fff; /* White Text */
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #627283;
+            margin: 0 5px;
+            
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-section {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 1000px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+        }
+
+        .doctor-card {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .doctor-image {
+            flex: 1;
+            max-width: 150px;
+            margin-right: 20px;
+        }
+
+        .doctor-image img {
+            width: 100%;
+            border-radius: 50%;
+            border: 3px solid #fff;
+        }
+
+        .doctor-details {
+            flex: 3;
+        }
+
+        .doctor-details h3 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .doctor-details p {
+            margin: 5px 0;
+        }
+
+        .doctor-details span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Doctor Profiles</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="online-consultation.html">Online Consultation</a>
+        <a href="patient-registration.html">Patient Registration</a>
+        <a href="doctor-admin-panel.html">Doctor & Admin Panel</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <section class="profile-section">
+        <div class="doctor-card">
+            <div class="doctor-image">
+                <img src="assets/doctor1.jpg" alt="Dr. John Doe">
+            </div>
+            <div class="doctor-details">
+                <h3>Dr. John Doe</h3>
+                <p><span>Specialization:</span> Cardiologist</p>
+                <p><span>Experience:</span> 15 years</p>
+                <p><span>Bio:</span> Dr. John Doe is a renowned cardiologist with extensive experience in treating complex heart conditions.</p>
+            </div>
+        </div>
+        <div class="doctor-card">
+            <div class="doctor-image">
+                <img src="assets/doctor2.jpg" alt="Dr. Jane Smith">
+            </div>
+            <div class="doctor-details">
+                <h3>Dr. Jane Smith</h3>
+                <p><span>Specialization:</span> Dermatologist</p>
+                <p><span>Experience:</span> 10 years</p>
+                <p><span>Bio:</span> Dr. Jane Smith specializes in skin care and cosmetic dermatology, offering advanced treatments.</p>
+            </div>
+        </div>
+        <div class="doctor-card">
+            <div class="doctor-image">
+                <img src="assets/doctor3.jpg" alt="Dr. Emily White">
+            </div>
+            <div class="doctor-details">
+                <h3>Dr. Emily White</h3>
+                <p><span>Specialization:</span> Pediatrician</p>
+                <p><span>Experience:</span> 8 years</p>
+                <p><span>Bio:</span> Dr. Emily White is a compassionate pediatrician, dedicated to providing the best care for children.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
