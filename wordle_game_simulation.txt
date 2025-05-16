@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wordle Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #121213;
+      color: #ffffff;
+    }
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(5, 60px);
+      grid-template-rows: repeat(6, 60px);
+      gap: 10px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .cell {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #3a3a3c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      background-color: #121213;
+      color: white;
+      text-transform: uppercase;
+    }
+    .green {
+      background-color: #538d4e !important;
+    }
+    .yellow {
+      background-color: #b59f3b !important;
+    }
+    .gray {
+      background-color: #3a3a3c !important;
+    }
+    #keyboard {
+      margin-top: 30px;
+    }
+    .key {
+      display: inline-block;
+      margin: 5px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      background: #818384;
+      color: white;
+      cursor: pointer;
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+    #guessBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      z-index: 9999;
+      animation: fall 3s linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Wordle Game</h1>
+  <div id="grid"></div>
+  <div id="keyboard"></div>
+  <button id="guessBtn">Guess</button>
+  <div id="message"></div>
+
+  <script>
+    const WORDS = [
+      "CRANE", "BLINK", "GHOST", "HONEY", "WATER", "MUSIC", "STONE", "PLANE", "CHAIR", "BREAD",
+      "HEART", "PRIZE", "SNAKE", "FLAME", "MOUNT", "CLEAN", "BRUSH", "TRACK", "CLOCK", "SHAPE",
+      "GRACE", "TREND", "STORM", "BRAVE", "CROWN", "LIGHT", "STICK", "FRAME", "GLOVE", "POINT",
+      "TIGER", "ALARM", "SWEET", "THING", "ROUND", "STAGE", "FAITH", "WORRY", "CABLE", "NIGHT",
+      "NOBLE", "THUMB", "GRIND", "TRICK", "JOKER", "BLAST", "TRUST", "SCORE", "RIDER", "SHOCK",
+      "FLOUR", "PLUCK", "GROWL", "BLACK", "LUNCH", "FLEET", "FIGHT", "BASIC", "MEANT", "MOTEL",
+      "RAISE", "LOWER", "STARE", "TRAIL", "VIRUS", "LEMON", "MIGHT", "MONEY", "FRESH", "DEPTH",
+      "WORST", "BRAND", "SHARE", "COVER", "SLEEP", "THREE", "GLASS", "CLOTH", "WASTE", "GRIND",
+      "BREAK", "STOCK", "WHEAT", "MERCY", "DRIVE", "SOUND", "FIELD", "FLOAT", "PLANT", "EARTH",
+      "SCALE", "TOWER", "HUMAN", "GUESS", "CHESS", "WRITE", "SMALL", "GIANT", "QUICK", "BLAME",
+      "TREAD", "WORLD", "LOVER", "CRUSH", "SHEEP", "BROWN", "GREEN", "CHART", "FRANK", "CHAIN",
+      "COAST", "CLOUD", "LEARN", "BRAIN", "FLOOR", "WHEEL", "BIRTH", "SPICE", "TRUCK", "DREAM",
+      "BRICK", "SUGAR", "NURSE", "SIGHT", "SWING", "TRAIL", "TASTE", "SHELL", "CANDY", "BLOOD",
+      "HURRY", "PRIDE", "FLASH", "STEEL", "GRASP", "EXACT", "VIVID", "QUILT", "DANCE", "EAGER",
+      "FLUID", "BUNCH", "DWELL", "CRISP", "CREEK", "BLEND", "CRAZY", "TWIST", "SKILL", "SOLID",
+      "WORTH", "DELAY", "FRAUD", "UNITY", "STIFF", "ANGRY", "WORRY", "FAULT", "VOICE", "GLARE",
+      "SPEND", "CRUEL", "WOUND", "TIGHT", "STUCK", "GRUMP", "PLAIN", "SHOUT", "TRUNK", "GUEST"
+    ];
+
+    const WORD = WORDS[Math.floor(Math.random() * WORDS.length)];
+    const MAX_TRIES = 6;
+    let currentGuess = [];
+    let currentRow = 0;
+
+    const grid = document.getElementById("grid");
+    const keyboard = document.getElementById("keyboard");
+    const message = document.getElementById("message");
+
+    const ALPHABETS = "QWERTYUIOPASDFGHJKLZXCVBNM".split("");
+
+    function createGrid() {
+      for (let i = 0; i < 30; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.setAttribute("id", `cell-${i}`);
+        grid.appendChild(cell);
+      }
+    }
+
+    function createKeyboard() {
+      ALPHABETS.forEach(letter => {
+        const key = document.createElement("div");
+        key.classList.add("key");
+        key.innerText = letter;
+        key.onclick = () => handleKey(letter);
+        keyboard.appendChild(key);
+      });
+    }
+
+    function handleKey(letter) {
+      if (currentGuess.length < 5) {
+        currentGuess.push(letter);
+        updateGrid();
+      }
+    }
+
+    function updateGrid() {
+      for (let i = 0; i < 5; i++) {
+        const cell = document.getElementById(`cell-${currentRow * 5 + i}`);
+        cell.innerText = currentGuess[i] || "";
+      }
+    }
+
+    function showConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.top = Math.random() * -100 + "px";
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        document.body.appendChild(confetti);
+       // setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+
+    function checkGuess() {
+      if (currentGuess.length !== 5) {
+        alert("Enter a 5-letter word!");
+        return;
+      }
+      let wordArray = WORD.split("");
+      let guessResult = ["gray", "gray", "gray", "gray", "gray"];
+
+      for (let i = 0; i < 5; i++) {
+        if (currentGuess[i] === wordArray[i]) {
+          guessResult[i] = "green";
+          wordArray[i] = null;
+        }
+      }
+
+      for (let i = 0; i < 5; i++) {
+        if (guessResult[i] !== "green" && wordArray.includes(currentGuess[i])) {
+          guessResult[i] = "yellow";
+          wordArray[wordArray.indexOf(currentGuess[i])] = null;
+        }
+      }
+
+      for (let i = 0; i < 5; i++) {
+        const cell = document.getElementById(`cell-${currentRow * 5 + i}`);
+        cell.classList.add(guessResult[i]);
+      }
+
+      if (currentGuess.join("") === WORD) {
+        message.innerText = "Congratulations! You guessed it!";
+        showConfetti();
+        document.getElementById("guessBtn").disabled = true;
+      } else if (currentRow === MAX_TRIES - 1) {
+        message.innerText = `Game Over! The word was ${WORD}.`;
+        document.getElementById("guessBtn").disabled = true;
+      } else {
+        currentRow++;
+        currentGuess = [];
+      }
+    }
+
+    document.getElementById("guessBtn").addEventListener("click", checkGuess);
+
+    createGrid();
+    createKeyboard();
+  </script>
+</body>
+</html>
